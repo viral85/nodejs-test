@@ -58,7 +58,7 @@ class sunriseApi {
      * @param {float} lat
      * @param {float} lng
      */
-    getSunRiseData(lat, lng) {
+    getSunRiseData(cb, inx, lat, lng) {
         return new Promise(async function(resolve, reject) {
             let params = {
                 lat: lat,
@@ -66,9 +66,11 @@ class sunriseApi {
             };
             try {
                 let response = await _this.sendRequest(params);
-                resolve(response);
+                cb(null, response, inx);
+                resolve();
             } catch (error) {
-                reject(error);
+                cb(error, null, inx);
+                reject();
             }
         });
     }

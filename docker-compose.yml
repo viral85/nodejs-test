@@ -1,8 +1,8 @@
 version: '2'
 services:
-    dayLength:
-        image: 'day-length:latest'
-        container_name: day-length
+    nodejsTest:
+        image: 'nodejs-test:latest'
+        container_name: nodejs-test
         restart: always
         build:
             dockerfile: Dockerfile
@@ -10,4 +10,4 @@ services:
         ports:
             - '3000:3000'
         volumes:
-            - './data/logs:/opt/day-length/logs'
+            - './data/logs:/opt/nodejs-test/logs'

@@ -3,9 +3,11 @@ $(document).ready(function() {
     let currentTimings = [];
 
     //get random lat long button click event
-    $("#get-lat-lng").click(function() {
+    $("#get-lat-lng").click(async function() {
         //call function for get random lat long from count
-        currentLatLongs = getLatLongs(100);
+        let url = "/api/v1/get-lat-longs"
+        let res = await ajaxRequest(url, { count: 100 });
+        currentLatLongs = res.data.currentLatLongs;
         let object = {
             heading: [
                 { title: "Latitude", width: "20%" },
@@ -25,7 +27,7 @@ $(document).ready(function() {
 
     //fetch timings from lat long button click event
     $("#fetch-times").click(async function() {
-        let url = "/fetch-times"
+        let url = "/api/v1/fetch-times"
         let data = { latLongs: currentLatLongs };
         try {
             //ajax request to server for get timings from lat long object
@@ -57,7 +59,7 @@ $(document).ready(function() {
 
     //get earliest sunrise and day length button click event
     $("#find-earliest").click(async function() {
-        let url = "/fetch-earliest"
+        let url = "/api/v1/fetch-earliest"
         let data = { timings: currentTimings };
         try {
 

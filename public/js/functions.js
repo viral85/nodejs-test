@@ -1,24 +1,9 @@
-function getRandomInRange(from, to, fixed) {
-    return (Math.random() * (to - from) + from).toFixed(fixed) * 1
-}
-
 function startLoading() {
     $(".loading").show();
 }
 
 function stopLoading() {
     $(".loading").hide();
-}
-
-function getLatLongs(count) {
-    let latLongs = [];
-    for (let i = 0; i < count; i++) {
-        latLongs.push([
-            getRandomInRange(0, 90, 7),
-            getRandomInRange(-180, 180, 7)
-        ]);
-    }
-    return latLongs;
 }
 
 function createTable(object) {

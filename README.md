@@ -5,11 +5,11 @@ We have implemented this demo in ExpressJS usinh Handlebars and AJAX response ar
 For developement environment. you need to perform below steps
 1.  Download code from github 
 ```
-git clone https://github.com/viral85/day-length.git
+git clone https://github.com/viral85/nodejs-test.git
 ```
 2. Goto Project directory
 ```
-> cd day-length
+> cd nodejs-test
 ```
 3. Install required packages
 ```
@@ -34,11 +34,11 @@ https://docs.docker.com/get-docker/
 After docker instalation complete, you have to execute below commands
 1.  Download code from github 
 ```
-git clone https://github.com/viral85/day-length.git
+git clone https://github.com/viral85/nodejs-test.git
 ```
 2. Goto Project directory
 ```
-cd day-length
+cd nodejs-test
 ```  
 3. Build docker container from source code
 ```

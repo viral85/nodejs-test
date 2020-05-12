@@ -3,14 +3,6 @@ const router = express.Router();
 const moment = require('moment');
 
 /**
- * GET request for start demo
- * 
- */
-router.get('/', function(req, res, next) {
-    res.render('index');
-});
-
-/**
  * GET request for fetch timings from lat long object
  * 
  */
@@ -23,34 +15,27 @@ router.post('/fetch-times', function(req, res, next) {
         fetch_timings_logs.info(req.body.latLongs);
 
         //define variables for parallel requests
-        let currentRequest = 0;
         let currentSuccessRequest = 0;
-        let counter = 0;
 
-        //function for parallel request to get sunrise data from lat long index wise
-        let callAsyncFunction = async function(currentLatLong) {
-            counter++;
+        //call sunrise api function for get detail data from lat long
+        let sunriseApiClass = require('../../requirements/sunrise-api');
+        let sunriseApi = new sunriseApiClass();
 
-            let lat = req.body.latLongs[currentLatLong][0];
-            let long = req.body.latLongs[currentLatLong][1];
+        //modify function for take maximum parallel request
+        let modifiedGetSunRiseData = asyncLimit(sunriseApi.getSunRiseData, config.parallelReq);
 
-            try {
-                //call sunrise api function for get detail data from lat long
-                let sunriseApiClass = require('../requirements/sunrise-api');
-                let sunriseApi = new sunriseApiClass();
-                let response = await sunriseApi.getSunRiseData(lat, long);
-
+        //callback function for each response of api
+        let callback = function(error, response, inx) {
+            if (error == null) {
                 //assign sunrise, sunset timings and day length to object
-                req.body.latLongs[currentLatLong].push(response["results"]["sunrise"]);
-                req.body.latLongs[currentLatLong].push(response["results"]["sunset"]);
-                req.body.latLongs[currentLatLong].push(response["results"]["day_length"]);
-            } catch (error) {
-                req.body.latLongs[currentLatLong].push("-");
-                req.body.latLongs[currentLatLong].push("-");
-                req.body.latLongs[currentLatLong].push("-");
+                req.body.latLongs[inx].push(response["results"]["sunrise"]);
+                req.body.latLongs[inx].push(response["results"]["sunset"]);
+                req.body.latLongs[inx].push(response["results"]["day_length"]);
+            } else {
+                req.body.latLongs[inx].push("-");
+                req.body.latLongs[inx].push("-");
+                req.body.latLongs[inx].push("-");
             }
-
-            counter--;
             currentSuccessRequest++;
 
             //if all request completed then response to client for request completion
@@ -61,19 +46,12 @@ router.post('/fetch-times', function(req, res, next) {
             }
         }
 
-        //timer function for frequent call parallel request as per parallelReq variable value
-        let timerFunction = function() {
-            if (counter < config.parallelReq) {
-                callAsyncFunction(currentRequest++);
-            }
-            if (currentRequest >= req.body.latLongs.length) {
-                return;
-            } else {
-                setTimeout(timerFunction, 10);
-            }
+        for (let inx in req.body.latLongs) {
+            let lat = req.body.latLongs[inx][0];
+            let long = req.body.latLongs[inx][1];
+            modifiedGetSunRiseData(callback, inx, lat, long);
         }
 
-        timerFunction();
     } else {
         sendError(req, res, {}, "002");
     }
@@ -104,6 +82,18 @@ router.post('/fetch-earliest', function(req, res, next) {
         return sendSuccess(req, res, { earliest: locationObject }, "003");
     } else {
         sendError(req, res, {}, "004");
+    }
+});
+
+/**
+ * POST request for get random lat-long as per count given in body
+ * 
+ */
+router.post('/get-lat-longs', function(req, res, next) {
+    if (req.body.count != undefined) {
+        return sendSuccess(req, res, { currentLatLongs: getLatLongs(req.body.count) }, "005");
+    } else {
+        sendError(req, res, {}, "006");
     }
 });
 

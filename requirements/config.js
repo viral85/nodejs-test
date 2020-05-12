@@ -16,5 +16,7 @@ module.exports = {
         "002": "Send proper latitude and longitude data",
         "003": "Get earliest sunrise timings successfully",
         "004": "Send proper timing data",
+        "005": "Get lat long array",
+        "006": "Please provide count",
     }
 }
