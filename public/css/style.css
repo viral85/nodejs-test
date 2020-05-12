@@ -1,0 +1,25 @@
+body {
+    margin: 5px;
+}
+
+#earliest,
+#data-div {
+    display: none;
+}
+
+.loading {
+    display: none;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.loading img {
+    height: 30px;
+    top: 49%;
+    left: 49%;
+    position: absolute;
+}

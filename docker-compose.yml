@@ -1,0 +1,13 @@
+version: '2'
+services:
+    dayLength:
+        image: 'day-length:latest'
+        container_name: day-length
+        restart: always
+        build:
+            dockerfile: Dockerfile
+            context: ./
+        ports:
+            - '3000:3000'
+        volumes:
+            - './data/logs:/opt/day-length/logs'
