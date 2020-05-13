@@ -23,6 +23,7 @@ $(document).ready(function() {
         $("#data-div div").html(tableHtml);
         $("#get-lat-lng").attr("disabled", "disabled");
         $("#fetch-times").removeAttr("disabled");
+        $("#reset").removeAttr("disabled");
     });
 
     //fetch timings from lat long button click event
@@ -103,5 +104,6 @@ $(document).ready(function() {
         $("#get-lat-lng").removeAttr("disabled");
         $("#fetch-times").attr("disabled", "disabled");
         $("#find-earliest").attr("disabled", "disabled");
+        $(this).attr("disabled", "disabled");
     });
 })

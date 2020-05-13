@@ -27,8 +27,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(setEnvironment);
+
+//route for home page
 app.use('/', require('./routes/home'));
-app.use('/api/v1', require('./routes/v1/index'));
+
+//route for implemented API
+app.use('/api/v1', require('./routes/api/v1/index'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

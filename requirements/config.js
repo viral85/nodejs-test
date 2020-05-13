@@ -18,5 +18,6 @@ module.exports = {
         "004": "Send proper timing data",
         "005": "Get lat long array",
         "006": "Please provide count",
+        "200": "Success"
     }
 }

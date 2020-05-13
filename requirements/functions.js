@@ -14,7 +14,7 @@ global.sendSuccess = function(req, res, data, code) {
         type: "success",
         message: config.messages[code],
         data: data,
-        code: code,
+        code: "200",
     });
 }
 

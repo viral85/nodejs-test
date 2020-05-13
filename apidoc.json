@@ -1,0 +1,10 @@
+{
+    "name": "Test Project",
+    "version": "1.0.0",
+    "description": "API implemented in this demo as mentioned below",
+    "title": "Test Project API",
+    "url": "http://localhost:3000",
+    "template": {
+        "withGenerator": false
+    }
+}
