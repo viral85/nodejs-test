@@ -1,4 +1,9 @@
-//function for create log file for specific module
+/**
+ * Wrapper Function for add logs into log files using Simple Node Logger package.
+ * @param       log_name  String   File name of log file where you want to add logs.
+ * 
+ * @returns     Void
+ */
 global.createLog = function(log_name) {
     return require('simple-node-logger').createRollingFileLogger({
         logDirectory: 'logs',
@@ -8,17 +13,31 @@ global.createLog = function(log_name) {
     });
 };
 
-//function for send success object to response
-global.sendSuccess = function(req, res, data, code) {
+/**
+ * API response helper for send success response in JSON format
+ * @param   req     Object  Request object
+ * @param   res     Object  Response Object 
+ * @param   data    Object  JSON object of data which need to pass in response
+ * 
+ * @returns Void
+ */
+global.sendSuccess = function(req, res, data) {
     res.send({
         type: "success",
-        message: config.messages[code],
         data: data,
         code: "200",
     });
 }
 
-//function for send error object to response
+/**
+ * API response helper for send error response in JSON format
+ * @param   req     Object  Request object
+ * @param   res     Object  Response Object 
+ * @param   data    Object  JSON object of data which need to pass in response
+ * @param   code    String  Error code wich is used for identify reason of error 
+ * 
+ * @returns  Void
+ */
 global.sendError = function(req, res, data, code) {
     res.send({
         type: "error",
@@ -28,7 +47,13 @@ global.sendError = function(req, res, data, code) {
     });
 }
 
-//function for modify any function to take max parallel request
+/**
+ * Function for modify any function to take max parallel request
+ * @param   fn     Function  Reference function
+ * @param   n      Object    Counter of parrellal request
+ *
+ */
+
 global.asyncLimit = function(fn, n)  {
     let pendingPromises = [];
     return async function(...args) {
@@ -43,12 +68,25 @@ global.asyncLimit = function(fn, n)  {
     };
 };
 
-//function for get random number between range with decimal
+/**
+ * Function for get random number between range with decimal
+ * @param   from    Number  Lower bound number of the range 
+ * @param   to      Number  Upper bound number of the range
+ * @param   fixed   Number  Integer value of numbers decimal points
+ * 
+ * @returns Number  Random generated number
+ * 
+ */
 global.getRandomInRange = function(from, to, fixed) {
     return (Math.random() * (to - from) + from).toFixed(fixed) * 1
 }
 
-//get random lat-longs as per count
+/**
+ * Generate Latitude and Longitude randomly.
+ * @param   count   Number      Number of pairs need to generate
+ * 
+ * @returns Array   Set of generated latitude and longitude
+ */
 global.getLatLongs = function(count) {
     let latLongs = [];
     for (let i = 0; i < count; i++) {
